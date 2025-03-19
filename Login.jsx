@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => { // Accept setIsLoggedIn as a prop
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -9,7 +9,9 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         if (email && password) {
-            navigate("/home");
+            localStorage.setItem("user", JSON.stringify({ email }));
+            setIsLoggedIn(true); // Update state in App.jsx
+            navigate("/home");   // Redirect to Home
         }
     };
 
@@ -39,7 +41,6 @@ const Login = () => {
                         Sign In
                     </button>
                 </form>
-                <p className="text-center text-gray-600 mt-3">Don't have an account? <a href="/signup" className="text-blue-500">Sign up</a></p>
             </div>
         </div>
     );
